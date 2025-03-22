@@ -20,7 +20,7 @@ public class Player extends Entity {
     
     public final int screenX;
     public final int screenY;
-    public int hasKey = 0; 
+   // public int hasKey = 0; 
     
     public Player(GamePanel gp, KeyHandler keyH) {
         this.gp = gp;
@@ -32,7 +32,7 @@ public class Player extends Entity {
         solidArea = new Rectangle();
         solidArea.x  = 8;
         solidArea.y = 16;
-        solidAreaDefaultX = solidArea.x;
+        solidAreaDefaultX = solidArea.x; 
         solidAreaDefaultY =  solidArea.y;
         solidArea.width = 32;
         solidArea.height = 32;
@@ -132,7 +132,7 @@ public class Player extends Entity {
     public void pickUpObject(int i) {
     	if (i != 999) {
     		
-    		String objectName = gp.obj[i].name;
+    		/*String objectName = gp.obj[i].name;
     		
     		switch (objectName) {
     		case "Key":
@@ -163,7 +163,7 @@ public class Player extends Entity {
     			gp.stopMusic();
     			gp.playSE(4);
     			break;
-    		}
+    		}*/
     	}
     }
 
