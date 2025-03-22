@@ -6,6 +6,8 @@ import java.awt.Graphics;
 import java.awt.Graphics2D; 
 
 import javax.swing.JPanel;
+
+import entity.Entity;
 import entity.Player;
 import object.SuperObject;
 import tile.TileManager;
@@ -30,8 +32,9 @@ public class GamePanel extends JPanel implements Runnable {
     // FPS 
     int FPS = 60;
     
+    //SYSTEM
     TileManager tileM = new TileManager(this);
-    KeyHandler keyH = new KeyHandler(this);
+    public KeyHandler keyH = new KeyHandler(this);
     Sound music = new Sound();
     Sound se = new Sound();
     public CollisionChecker cChecker = new CollisionChecker(this);
@@ -42,11 +45,13 @@ public class GamePanel extends JPanel implements Runnable {
     //ENTITY AND OBJECTS
     public SuperObject obj[] = new SuperObject[10];
     public AssetSetter aSetter = new AssetSetter(this);
+    public Entity npc[] = new Entity[10];
     
     //game state
     public int gameState;
     public final int playState = 1;
     public final int pauseState = 2;
+    public final int dialogueState = 3;
     
 
     public GamePanel() {
@@ -64,6 +69,7 @@ public class GamePanel extends JPanel implements Runnable {
     public void setupGame() {
     	
     	aSetter.setObject();
+    	aSetter.setNPC();
     	playMusic(0);
     	stopMusic();
     	gameState = playState;
@@ -107,7 +113,14 @@ public class GamePanel extends JPanel implements Runnable {
     public void update() {
     	
     	if (gameState == playState) {
+    		//player
     		player.update();
+    		//npc
+    		for (int i = 0; i < npc.length; i++) {
+    			if (npc [i] != null) {
+    				npc[i].update();
+    			}
+    		}
     	}
         if (gameState == pauseState) {
         	//nothjng for now
@@ -135,6 +148,12 @@ public class GamePanel extends JPanel implements Runnable {
         	if (obj[i] != null) {
         			obj[i].draw(g2, this);
         	}
+        }
+        //npc
+        for (int i = 0; i < npc.length; i++) {
+        	if(npc[i] != null) {
+        		npc[i].draw(g2);
+        	} 
         }
         
         //player
