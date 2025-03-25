@@ -6,6 +6,7 @@ import java.awt.Font;
 import java.awt.Graphics2D;
 import java.awt.image.BufferedImage;
 import java.text.DecimalFormat;
+import java.io.File;
 
 import object.OBJ_Key;
 
@@ -14,6 +15,9 @@ public class UI {
     GamePanel gp;
     Graphics2D g2;
     Font arial_40, arial_80B;
+    Font pixelFont;
+    public int commandNum = 0;
+    public int titleScreenState = 0; // 0: the first screen, 1: the 2nd screen
     
  //   BufferedImage keyImage;
     
@@ -32,6 +36,15 @@ public class UI {
         
         arial_40 = new Font("Arial", Font.PLAIN, 40);
         arial_80B = new Font("Arial", Font.BOLD, 80);
+        
+        try {
+        	pixelFont = Font.createFont(Font.TRUETYPE_FONT, new File("res/font/PixelFont.ttf"));
+            pixelFont = pixelFont.deriveFont(55F);
+        	
+        } catch (Exception e) {
+        	e.printStackTrace();
+            pixelFont = new Font("Monospaced", Font.BOLD, 55);
+        }
         
  //       OBJ_Key key = new OBJ_Key(gp);
  //       keyImage = key.image;
@@ -105,7 +118,13 @@ public class UI {
     		}
     	} */
     	
+    	
     	this.g2 = g2;
+    	
+    	//TITLE STATE
+    	if(gp.gameState == gp.titleState) {
+    		drawTitleScreen();
+    	}
     	
     	g2.setFont(arial_40);
     	g2.setColor(Color.white);
@@ -124,6 +143,103 @@ public class UI {
     		drawDialogueScreen();
     	}
 
+    }
+    
+    public void drawTitleScreen() {
+    	
+    	if(titleScreenState == 0) {
+    		g2.setColor(new Color(29, 20, 17));
+        	g2.fillRect(0, 0, gp.screenWidth, gp.screenHeight);
+        	
+        	g2.setFont(pixelFont.deriveFont(55F)); 
+        	String text = "Little Knight";
+        	int x = getXforCenteredText(text);
+        	int y = gp.tileSize*3;
+        	
+        	//Shadow Text
+        	g2.setColor(Color.darkGray);
+            g2.drawString(text, x + 5, y + 5);
+        	
+            //Main Text
+        	g2.setColor(Color.white);
+        	g2.drawString(text, x, y);
+        	
+        	//Character Image
+        	x = gp.screenWidth / 2 - (gp.tileSize * 2) / 2;
+        	y += gp.tileSize * 2;
+        	g2.drawImage(gp.player.down1, x, y, gp.tileSize * 2, gp.tileSize * 2, null);
+        	
+        	//Menu
+        	g2.setFont(pixelFont.deriveFont(30F));
+        	
+        	text = "NEW GAME";
+        	x = getXforCenteredText(text);
+        	y += gp.tileSize * 3.5;
+        	g2.drawString(text, x, y);
+        	if(commandNum == 0) {
+        		g2.drawString(">", x-gp.tileSize, y);
+        	}
+        	
+        	text = "LOAD GAME";
+        	x = getXforCenteredText(text);
+        	y += gp.tileSize;
+        	g2.drawString(text, x, y);
+        	if(commandNum == 1) {
+        		g2.drawString(">", x-gp.tileSize, y);
+        	}
+        	
+        	text = "EXIT";
+        	x = getXforCenteredText(text);
+        	y += gp.tileSize;
+        	g2.drawString(text, x, y);
+        	if(commandNum == 2) {
+        		g2.drawString(">", x-gp.tileSize, y);
+        	}
+    	} 
+    	
+    	// Class Selection
+    	
+    	else if (titleScreenState == 1) {
+    		g2.setColor(Color.white);
+    		g2.setFont(pixelFont.deriveFont(30F));
+    		
+    		String text = "Select your class!";
+    		int x = getXforCenteredText(text);
+    		int y = gp.tileSize * 3;
+    		g2.drawString(text, x, y);
+    		
+    		text = "Fighter";
+    		x = getXforCenteredText(text);
+    		y += gp.tileSize * 3;
+    		g2.drawString(text, x, y);
+    		if(commandNum == 0) {
+    			g2.drawString(">", x-gp.tileSize, y);
+    		}
+    		
+    		text = "Thief";
+    		x = getXforCenteredText(text);
+    		y += gp.tileSize;
+    		g2.drawString(text, x, y);
+    		if(commandNum == 1) {
+    			g2.drawString(">", x-gp.tileSize, y);
+    		}
+    		
+    		text = "Sorcerer";
+    		x = getXforCenteredText(text);
+    		y += gp.tileSize;
+    		g2.drawString(text, x, y);
+    		if(commandNum == 2) {
+    			g2.drawString(">", x-gp.tileSize, y);
+    		}
+    		
+    		text = "Back";
+    		x = getXforCenteredText(text);
+    		y += gp.tileSize * 2;
+    		g2.drawString(text, x, y);
+    		if(commandNum == 3) {
+    			g2.drawString(">", x-gp.tileSize, y);
+    		}
+    	}
     }
     
     public void drawPauseScreen() {
