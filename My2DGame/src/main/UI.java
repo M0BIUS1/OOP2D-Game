@@ -9,12 +9,11 @@ import java.awt.RenderingHints;
 import java.awt.image.BufferedImage;
 import java.io.IOException;
 import java.io.InputStream;
-import java.text.DecimalFormat;
 import java.io.File;
 
-import object.OBJ_Key;
 import object.OBJ_Heart;
-import object.SuperObject;
+import entity.Entity;
+
 
 public class UI {
 
@@ -66,7 +65,7 @@ public class UI {
  //       keyImage = key.image;
         
         //CREATE HUD OBJECT
-        SuperObject heart = new OBJ_Heart(gp);
+        Entity heart = new OBJ_Heart(gp);
         heart_full = heart.image;
         heart_half = heart.image2;
         heart_blank = heart.image3;
