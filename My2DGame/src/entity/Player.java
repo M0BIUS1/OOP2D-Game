@@ -51,14 +51,14 @@ public class Player extends Entity {
     
     public void getPlayerImage() {
         
-        up1 = setup("/player/boy_up_1");
-        up2 = setup("/player/boy_up_2");
-        down1 = setup("/player/boy_down_1");
-        down2 = setup("/player/boy_down_2");
-        left1 = setup("/player/boy_left_1");
-        left2 = setup("/player/boy_left_2");
-        right1 = setup("/player/boy_right_1");
-        right2 = setup("/player/boy_right_2");
+        up1 = setup("/player/down_left_walk");
+        up2 = setup("/player/down_right_walk");
+        down1 = setup("/player/top_left_walk");
+        down2 = setup("/player/top_right_walk");
+        left1 = setup("/player/left_left_walk");
+        left2 = setup("/player/left_right_walk");
+        right1 = setup("/player/right_left_walk");
+        right2 = setup("/player/right_right_walk");
     }
     
    
