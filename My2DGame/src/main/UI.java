@@ -284,7 +284,8 @@ public class UI {
     }
     
     public void drawPauseScreen() {
-    	g2.setFont(g2.getFont().deriveFont(Font.PLAIN, 80F));
+    	g2.setFont(pixelFont.deriveFont(80F));
+    	//g2.setFont(g2.getFont().deriveFont(Font.PLAIN, 80F));
     	String text = "PAUSED";
     	int x = getXforCenteredText(text);
     	
@@ -302,11 +303,12 @@ public class UI {
     	
     	drawSubWindow(x, y, width, height);
     	
-    	g2.setFont(g2.getFont().deriveFont(Font.PLAIN,28F));
+    	//g2.setFont(pixelFont.deriveFont(17F));
+    	g2.setFont(new Font("Monospaced", Font.BOLD,25));
     	x += gp.tileSize;
     	y += gp.tileSize;
     	
-    	for (String line  : currentDialogue.split("/n")) {
+    	for (String line  : currentDialogue.split("\n")) {
         	g2.drawString(line, x, y);
         	 y += 40;
         	 
