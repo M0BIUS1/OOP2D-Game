@@ -40,7 +40,7 @@ public class NPC_OldMan extends Entity {
 	    	
 	    	if (actionLockCounter == 120) {
 	    		Random random = new Random();
-		    	int i = random.nextInt(100) +1; //pick up a dumber 1 - 100
+		    	int i = random.nextInt(100) +1; //pick up a number 1 - 100
 		    	
 		    	if (i <= 25 ) {
 		    		direction = "up";
