@@ -16,7 +16,6 @@ import java.io.IOException;
 import javax.imageio.ImageIO;
 
 public class Player extends Entity {
-    //Sittie Testing aydduu
     KeyHandler keyH;
     
     public final int screenX;
@@ -27,7 +26,6 @@ public class Player extends Entity {
     public Player(GamePanel gp, KeyHandler keyH) {
     	
     	super(gp); 
-    	
         this.keyH = keyH;
         
         screenX = gp.screenWidth/2 - (gp.tileSize/2);

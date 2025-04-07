@@ -1,5 +1,6 @@
 package main;
 
+
 import java.awt.BasicStroke;
 import java.awt.Color;
 import java.awt.Font;
@@ -10,13 +11,13 @@ import java.awt.image.BufferedImage;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.File;
-
+import javax.imageio.ImageIO;
 import object.OBJ_Heart;
 import entity.Entity;
 
 
 public class UI {
-
+	BufferedImage titleBackground;
     GamePanel gp;
     Graphics2D g2;
     Font maruMonica, purisaB;
@@ -40,6 +41,12 @@ public class UI {
 
     public UI(GamePanel gp) {
         this.gp = gp;
+        
+        try {
+            titleBackground = ImageIO.read(getClass().getResourceAsStream("/objects/menu_background.png"));
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
         
         try {
         	InputStream is = getClass().getResourceAsStream("/font/x12y16pxMaruMonica.ttf");
@@ -204,12 +211,18 @@ public class UI {
     
     public void drawTitleScreen() {
     	
+    	
     	if(titleScreenState == 0) {
-    		g2.setColor(new Color(29, 20, 17));
-        	g2.fillRect(0, 0, gp.screenWidth, gp.screenHeight);
-        	
+    		
+    		if(titleBackground != null) {
+                g2.drawImage(titleBackground, 0, 0, gp.screenWidth, gp.screenHeight, null);
+            } else {
+                g2.setColor(new Color(29, 20, 17));
+                g2.fillRect(0, 0, gp.screenWidth, gp.screenHeight);
+            }
+    		
         	g2.setFont(pixelFont.deriveFont(55F)); 
-        	String text = "Little Knight";
+        	String text = "";
         	int x = getXforCenteredText(text);
         	int y = gp.tileSize*3;
         	
@@ -224,14 +237,16 @@ public class UI {
         	//Character Image
         	x = gp.screenWidth / 2 - (gp.tileSize * 2) / 2;
         	y += gp.tileSize * 2;
-        	g2.drawImage(gp.player.down1, x, y, gp.tileSize * 2, gp.tileSize * 2, null);
+        	//g2.drawImage(gp.player.down1, x, y, gp.tileSize * 2, gp.tileSize * 2, null);
         	
         	//Menu
         	g2.setFont(pixelFont.deriveFont(30F));
         	
+        	int menuBaseY = gp.screenHeight - gp.tileSize * 11;
+        	
         	text = "NEW GAME";
         	x = getXforCenteredText(text);
-        	y += gp.tileSize * 3.5;
+        	y += menuBaseY;
         	g2.drawString(text, x, y);
         	if(commandNum == 0) {
         		g2.drawString(">", x-gp.tileSize, y);
