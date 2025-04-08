@@ -22,10 +22,13 @@ public class Player extends Entity {
     public final int screenY;
     int standCounter = 0;
    // public int hasKey = 0; 
+    public boolean attackCanceled = false;
+    
     
     public Player(GamePanel gp, KeyHandler keyH) {
     	
     	super(gp); 
+    	
         this.keyH = keyH;
         
         screenX = gp.screenWidth/2 - (gp.tileSize/2);
@@ -138,6 +141,13 @@ public class Player extends Entity {
             	   }
                }
                
+               if(keyH.enterPressed == true && attackCanceled == false) {
+            	   gp.playSE(7);
+            	   attacking = true;
+            	   spriteCounter = 0;
+               }
+               
+               attackCanceled = false;
                gp.keyH.enterPressed = false;
                 
                 spriteCounter++;
@@ -166,6 +176,11 @@ public class Player extends Entity {
     			invincibleCounter = 0;
     		}
     	}
+    	
+    	if(life<=0) {
+    		gp.gameState=gp.gameOverState;
+    	}
+    	
     }
     
     public void attacking() {
@@ -255,12 +270,10 @@ public class Player extends Entity {
     	
     	if(gp.keyH.enterPressed == true) {
     		if (i != 999) {
+    			attackCanceled = true;
         		gp.gameState = gp.dialogueState;
             	gp.npc[i].speak();
-        	} else {
-        		gp.playSE(7);
-        		attacking = true;
-        	}
+        	} 
     	}
     }
     

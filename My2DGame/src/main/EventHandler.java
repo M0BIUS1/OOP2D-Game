@@ -47,13 +47,13 @@ public class EventHandler {
 		
 		
 		if(canTouchEvent == true) {
-			if(hit(27, 16, "right") == true) {
+			/*if(hit(27, 16, "right") == true) {
 				damagePit(27, 16, gp.dialogueState);
 			}
 			
 			if(hit(23, 19, "any") == true) {
 				damagePit(27, 16, gp.dialogueState);
-			}
+			}*/
 			
 			if(hit(23, 12, "up") == true) {
 				healingPool(23, 12, gp.dialogueState);
@@ -90,13 +90,13 @@ public class EventHandler {
 		return hit;
 	}
 	
-	public void damagePit(int col, int row, int gameState) {
+	/*public void damagePit(int col, int row, int gameState) {
 		gp.gameState = gameState;
 		gp.ui.currentDialogue = "You fall into a pit!";
 		gp.player.life -= 1;
 		//eventRect[col][row].eventDone = true;
 		canTouchEvent = false;
-  	}
+  	}*/
 	
 	public void healingPool(int col, int row, int gameState) {
 		
@@ -104,6 +104,8 @@ public class EventHandler {
 		
 		if(gp.keyH.enterPressed == true) {
 			gp.gameState = gameState;
+			gp.player.attackCanceled = true;
+			gp.playSE(2);
 			gp.ui.currentDialogue = "You drink the water.\nYour life has been recovered.";
 			gp.player.life = gp.player.maxLife;
 		}
