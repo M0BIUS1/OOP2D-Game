@@ -165,9 +165,10 @@ public class KeyHandler implements KeyListener {
     	if(code == KeyEvent.VK_ENTER) {
     		if(gp.ui.commandNum == 0) {
     			gp.gameState = gp.playState;
+    			gp.retry();
     		}else if(gp.ui.commandNum == 1) {
-    			gp.ui.titleScreenState = 0;
     			gp.gameState = gp.titleState;
+    			gp.restart();
     		}
     	}
     }
