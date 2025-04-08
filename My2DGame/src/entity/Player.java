@@ -83,6 +83,24 @@ public class Player extends Entity {
     	return defense = dexterity * currentShield.defenseValue;
     }
     
+    public void setDefaultPositions() {
+    	worldX = gp.tileSize * 23;
+    	worldY = gp.tileSize * 21;
+    	direction = "down";
+    }
+    
+    public void restoreLifeAndMana() {
+    	life = maxLife;
+    	//mana = maxMana;
+    	invincible = false;
+    }
+    
+    public void setItems() {
+    	//inventory.clear();
+    	//add other inventory here
+    	
+    }
+    
     public void getPlayerImage() {
         
         up1 = setup("/player/down_left_walk", gp.tileSize, gp.tileSize);
@@ -105,6 +123,8 @@ public class Player extends Entity {
     	attackRight1 = setup("/player/boy_attack_right_1", gp.tileSize * 2, gp.tileSize);
     	attackRight2 = setup("/player/boy_attack_right_2", gp.tileSize * 2, gp.tileSize);
     }
+    
+    
    
     public void update() {
     	if(attacking == true ) {
@@ -199,6 +219,7 @@ public class Player extends Entity {
     	
     	if(life<=0) {
     		gp.gameState=gp.gameOverState;
+    		//gp.playSE(12);
     	}
     	
     }

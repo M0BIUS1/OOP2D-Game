@@ -277,7 +277,7 @@ public class UI {
     	} 
     	
     	// Class Selection
-    	
+    	/*
     	else if (titleScreenState == 1) {
     		g2.setColor(Color.white);
     		g2.setFont(pixelFont.deriveFont(30F));
@@ -318,7 +318,7 @@ public class UI {
     		if(commandNum == 3) {
     			g2.drawString(">", x-gp.tileSize, y);
     		}
-    	}
+    	} */
     }
     
     public void drawPauseScreen() {
