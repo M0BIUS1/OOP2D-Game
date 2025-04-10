@@ -16,7 +16,7 @@ public class MON_UndeadSoldier extends Entity {
 		type = 2;
 		name = "Undead Soldier";
 		speed = 1;
-		maxLife = 10;
+		maxLife = 6;
 		life = maxLife;
 
 		solidArea.x = 4;

@@ -16,7 +16,7 @@ public class MON_Spider extends Entity{
 		type = 2;
 		name = "Dark Spider";
 		speed = 1;
-		maxLife = 10;
+		maxLife = 5;
 		life = maxLife;
 
 		solidArea.x = 4;

@@ -576,10 +576,8 @@ public class UI {
     	if(commandNum==1) {
     		g2.drawString(">", x-40, y);
     	}
-    	
-    	
+    		
     }
-    
     
     
     public void drawSubWindow(int x, int y, int width, int height) {
