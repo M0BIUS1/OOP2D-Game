@@ -81,8 +81,8 @@ public class Player extends Entity {
     	//inventory.clear();
     	//add other inventory here
     	inventory.add(currentWeapon);
-    	inventory.add(currentShield);
-    	inventory.add(new OBJ_Key(gp));
+    	//inventory.add(currentShield);
+    	//inventory.add(new OBJ_Key(gp));
     }
     
     public int getAttack() {
@@ -281,6 +281,7 @@ public class Player extends Entity {
             switch (objectName) {
                 case "Key":
                     gp.playSE(1);
+                    inventory.add(gp.obj[i]);
                     hasKey++;  // Increment the key count
                     gp.obj[i] = null;
                     gp.ui.showMessage("You got a Key!");
@@ -291,6 +292,12 @@ public class Player extends Entity {
                         gp.obj[i] = null;
                         hasKey--;  // Decrement the key count when a door is opened
                         gp.ui.showMessage("You opened the Door!");
+                        for (int j = 0; j < inventory.size(); j++) {
+                            if (inventory.get(j).name.equals("Key")) {
+                                inventory.remove(j);
+                                break;
+                            }
+                        }
                     } else {
                         gp.ui.showMessage("You need a Key!");
                     }
