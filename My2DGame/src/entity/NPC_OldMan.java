@@ -29,10 +29,15 @@ public class NPC_OldMan extends Entity {
 	    }
 	 	public void setDialogue() {
 	 		
-	 		dialogues[0] = "Hi, Adventurer!";
-	 		dialogues[1] = "Welcome to the Death Trail.";
-	 		dialogues[2] = "In this Trial Glory Awaits.";
-	 		dialogues[3] = "But becareful in your journey!";
+	 		dialogues[0] = "Ah you must be the";
+	 		dialogues[1] = "Little Knight!!";
+	 		dialogues[2] = "A skilled and diciplined ";
+	 		dialogues[3] = "Warrior";
+	 		dialogues[4] = "So you are sent here to";
+	 		dialogues[5] = "Retrieve an Ancient Treasure";
+	 		dialogues[6] = "But you must travel to the";
+	 		dialogues[7] = "East and talk to the Wizard";
+	 		dialogues[8] = "(Make sure to Exhaust all dialoge)";
 	 	}
 	    public void setAction() {
 	    	

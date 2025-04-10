@@ -1,6 +1,5 @@
 package main;
 
-
 import java.awt.BasicStroke;
 import java.awt.Color;
 import java.awt.Font;
@@ -10,34 +9,35 @@ import java.awt.RenderingHints;
 import java.awt.image.BufferedImage;
 import java.io.IOException;
 import java.io.InputStream;
+import java.text.DecimalFormat;
 import java.io.File;
 import javax.imageio.ImageIO;
 import object.OBJ_Heart;
+import object.OBJ_Key;
 import entity.Entity;
 
+
 public class UI {
-	BufferedImage titleBackground;
+    BufferedImage titleBackground;
     GamePanel gp;
     Graphics2D g2;
     Font maruMonica, purisaB;
-    Font arial_40, arial_80B;
+    Font arial_40 = new Font("Arial", Font.PLAIN, 40);
+    Font arial_80B = new Font("Arial", Font.BOLD, 80);
     Font pixelFont;
     BufferedImage heart_full, heart_half, heart_blank;
     public int commandNum = 0;
-    public int titleScreenState = 0; // 0: the first screen, 1: the 2nd screen
+    public int titleScreenState = 0;
     public int slotCol = 0;
     public int slotRow = 0;
     
- //   BufferedImage keyImage;
-    
+    BufferedImage keyImage;
     public boolean messageOn = false;
     public String message = "";
     int messageCounter = 0;
     public boolean gameFinished = false;
-    
-//    double playTime;
-//    DecimalFormat dFormat = new DecimalFormat("#0.00");
-    
+    double playTime;
+    DecimalFormat dFormat = new DecimalFormat("#0.00");
     public String currentDialogue = "";
 
     public UI(GamePanel gp) {
@@ -50,101 +50,121 @@ public class UI {
         }
         
         try {
-        	InputStream is = getClass().getResourceAsStream("/font/x12y16pxMaruMonica.ttf");
-			maruMonica = Font.createFont(Font.TRUETYPE_FONT, is);
-			is = getClass().getResourceAsStream("/font/Purisa Bold.ttf");
-			purisaB = Font.createFont(Font.TRUETYPE_FONT, is);
-		} catch (FontFormatException e) {
-			e.printStackTrace();
-		} catch (IOException e) {
-			e.printStackTrace();
-		}
+            InputStream is = getClass().getResourceAsStream("/font/x12y16pxMaruMonica.ttf");
+            maruMonica = Font.createFont(Font.TRUETYPE_FONT, is);
+            is = getClass().getResourceAsStream("/font/Purisa Bold.ttf");
+            purisaB = Font.createFont(Font.TRUETYPE_FONT, is);
+        } catch (FontFormatException | IOException e) {
+            e.printStackTrace();
+        }
         
         try {
-        	pixelFont = Font.createFont(Font.TRUETYPE_FONT, new File("res/font/PixelFont.ttf"));
+            pixelFont = Font.createFont(Font.TRUETYPE_FONT, new File("res/font/PixelFont.ttf"));
             pixelFont = pixelFont.deriveFont(55F);
-        	
         } catch (Exception e) {
-        	e.printStackTrace();
+            e.printStackTrace();
             pixelFont = new Font("Monospaced", Font.BOLD, 55);
         }
         
- //       OBJ_Key key = new OBJ_Key(gp);
- //       keyImage = key.image;
+        // Initialize key image
+        OBJ_Key key = new OBJ_Key(gp);
+        keyImage = key.image;
         
-        //CREATE HUD OBJECT
+        // Create HUD objects
         Entity heart = new OBJ_Heart(gp);
         heart_full = heart.image;
         heart_half = heart.image2;
         heart_blank = heart.image3;
     }
-    public void showMessage(String text){
+    public void showMessage1(String text){
     	
     	message = text;
     	messageOn = true;
     }
     
+    public void showMessage(String text) {
+        message = text;
+        messageOn = true;
+    }
+    
     public void draw(Graphics2D g2) {
-    	/* g2.setFont(arial_40);
+        this.g2 = g2;
+        g2.setFont(arial_40);
+        g2.setColor(Color.white);
 
+        if (gameFinished) {
+            drawGameFinishedScreen();
+        } else {
+            drawHUD();
+        }
+        
+        g2.setFont(maruMonica);
+        g2.setRenderingHint(RenderingHints.KEY_TEXT_ANTIALIASING, RenderingHints.VALUE_TEXT_ANTIALIAS_ON);
 
-    	g2.setColor(Color.white);
+        // Draw different screens based on game state
+        if(gp.gameState == gp.titleState) {
+            drawTitleScreen();
+        } else if (gp.gameState == gp.playState) {
+            drawPlayerLife();
+        } else if (gp.gameState == gp.pauseState) {
+            drawPlayerLife();
+            drawPauseScreen();
+        } else if (gp.gameState == gp.dialogueState) {
+            drawPlayerLife();
+            drawDialogueScreen();
+        } else if (gp.gameState == gp.characterState) {
+            drawCharacterScreen();
+            drawInventory();
+        } else if (gp.gameState == gp.gameOverState) {
+            drawGameOverScreen();
+        }
+    }
 
-    	if (gameFinished == true) {
-    		
-    		String text;
-    		int textLength;
-    		int x;
-    		int y;
-    		
-    		text = "YOU FOUND THE TREASURE!";
-    		textLength = (int)g2.getFontMetrics().getStringBounds(text, g2).getWidth();
-    		x =gp.screenWidth/2 - textLength/2;
-    		y =gp.screenHeight/2 - (gp.tileSize*3);
-    		g2.drawString(text, x, y);
-    		
-    		text = "Your Time is :" + dFormat.format(playTime) + "!";
-    		textLength = (int)g2.getFontMetrics().getStringBounds(text, g2).getWidth();
-    		x =gp.screenWidth/2 - textLength/2;
-    		y =gp.screenHeight/2 + (gp.tileSize*4);
-    		g2.drawString(text, x, y);
-    		
-    		
-    		
-    		g2.setFont(arial_80B);
-    		g2.setColor(Color.yellow);
-    		text = "Congratulations!";
-    		textLength = (int)g2.getFontMetrics().getStringBounds(text, g2).getWidth();
-    		x =gp.screenWidth/2 - textLength/2;
-    		y =gp.screenHeight/2 + (gp.tileSize*2);
-    		g2.drawString(text, x, y);
-    		
-    		 gp.gameThread = null;
-    	}
+    private void drawHUD() {
+        if (keyImage != null) {
+            g2.drawImage(keyImage, gp.tileSize / 2, gp.tileSize / 2, gp.tileSize, gp.tileSize, null);
+        }
+        
+      
+        g2.drawString("x " + gp.player.getKeyCount(), gp.tileSize + 20, 100);  
+        playTime += (double) 1 / 60;
+        g2.drawString("Time:" + dFormat.format(playTime), gp.tileSize * 11, 65);
 
-    	else {
-    		g2.setFont(arial_40);
-    		g2.setColor(Color.white);
-    		g2.drawImage(keyImage, gp.tileSize/2, gp.tileSize/2, gp.tileSize, gp.tileSize, null);
-    		g2.drawString("x "+ gp.player.hasKey, 74, 65);
+        if (messageOn) {
+            g2.setFont(g2.getFont().deriveFont(30F));
+            g2.drawString(message, gp.tileSize / 2, gp.tileSize * 5);
 
-    		//TIMER
-    		playTime +=(double)1/60;
-    		g2.drawString("Time:"+dFormat.format(playTime), gp.tileSize*11, 65);
-    		
-    		//Message
-    		if(messageOn == true) {
-    			g2.setFont(g2.getFont().deriveFont(30F));
-    			g2.drawString(message, gp.tileSize/2, gp.tileSize*5);
-    			
-    			messageCounter++;
-    			
-    			if(messageCounter > 120) {
-    				messageCounter = 0;
-    				messageOn = false;
-    			}
-    		}
-    	} */
+            messageCounter++;
+            if (messageCounter > 120) {
+                messageCounter = 0;
+                messageOn = false;
+            }
+        }
+    }
+
+    private void drawGameFinishedScreen() {
+        String text = "YOU FOUND THE TREASURE!";
+        int textLength = g2.getFontMetrics().stringWidth(text);
+        int x = gp.screenWidth/2 - textLength/2;
+        int y = gp.screenHeight/2 - (gp.tileSize*3);
+        g2.drawString(text, x, y);
+        
+        text = "Your Time is: " + dFormat.format(playTime) + "!";
+        textLength = g2.getFontMetrics().stringWidth(text);
+        x = gp.screenWidth/2 - textLength/2;
+        y = gp.screenHeight/2 + (gp.tileSize*4);
+        g2.drawString(text, x, y);
+        
+        g2.setFont(arial_80B);
+        g2.setColor(Color.yellow);
+        text = "Congratulations!";
+        textLength = g2.getFontMetrics().stringWidth(text);
+        x = gp.screenWidth/2 - textLength/2;
+        y = gp.screenHeight/2 + (gp.tileSize*2);
+        g2.drawString(text, x, y);
+        
+        gp.gameThread = null;
+    
     	
     	
     	this.g2 = g2;

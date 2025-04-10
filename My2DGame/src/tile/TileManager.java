@@ -26,7 +26,7 @@ public class TileManager {
     	
         this.gp = gp;
         
-        InputStream is = getClass().getResourceAsStream("/maps/tiledata.txt");
+        InputStream is = getClass().getResourceAsStream("/maps/datafileVer2.txt");
         BufferedReader br = new BufferedReader(new InputStreamReader(is));
         
         String line;
@@ -45,7 +45,7 @@ public class TileManager {
         tile = new Tile[fileNames.size()];
         getTileImage();
         
-        is = getClass().getResourceAsStream("/maps/finalMap.txt");
+        is = getClass().getResourceAsStream("/maps/finalMapVer2.txt");
         br = new BufferedReader(new InputStreamReader(is));
         
         try {
@@ -63,7 +63,7 @@ public class TileManager {
         }
         
 
-        loadMap("/maps/finalMap.txt",0) ; 
+        loadMap("/maps/finalMapVer2.txt",0) ; 
     }
     
     public void getTileImage() {

@@ -27,26 +27,26 @@ public class Player extends Entity {
     public boolean attackCanceled = false;
     public ArrayList<Entity> inventory = new ArrayList<>();
     public final int maxInventorySize = 20;
+
+	private int hasKey;
     
-    public Player(GamePanel gp, KeyHandler keyH) {
-    	
-    	super(gp); 
-    	
+	public Player(GamePanel gp, KeyHandler keyH) {
+        super(gp);
         this.keyH = keyH;
         
-        screenX = gp.screenWidth/2 - (gp.tileSize/2);
-        screenY = gp.screenHeight/2 - (gp.tileSize/2);
+        screenX = gp.screenWidth / 2 - (gp.tileSize / 2);
+        screenY = gp.screenHeight / 2 - (gp.tileSize / 2);
         
         solidArea = new Rectangle();
-        solidArea.x  = 8;
+        solidArea.x = 8;
         solidArea.y = 16;
         solidAreaDefaultX = solidArea.x; 
-        solidAreaDefaultY =  solidArea.y;
+        solidAreaDefaultY = solidArea.y;
         solidArea.width = 32;
         solidArea.height = 32;
         
         attackArea.width = 36;
-        attackArea.height =36;
+        attackArea.height = 36;
         
         setDefaultValues(); 
         getPlayerImage();
@@ -275,42 +275,51 @@ public class Player extends Entity {
     }
     
     public void pickUpObject(int i) {
-    	if (i != 999) {
-    		
-    		/*String objectName = gp.obj[i].name;
-    		
-    		switch (objectName) {
-    		case "Key":
-    			gp.playSE(1);
-    			hasKey++;
-    			gp.obj[i] = null;
-    			gp.ui.showMessage("You got a Key!");
-    			break;
-    		case "Door":
-    			if (hasKey > 0) {
-    				gp.playSE(3);
-    				gp.obj[i] = null;
-    				hasKey--;
-    				gp.ui.showMessage("You opened the Door!");
-    			}
-    			else {
-    				gp.ui.showMessage("You need a Key!");
-    			}
-    			break;
-    		case "Boots":
-    			gp.playSE(2);
-    			speed += 2;
-    			gp.obj[i] = null;
-    			gp.ui.showMessage("Speed Up!");
-    			break;
-    		case "Chest":
-    			gp.ui.gameFinished =true;
-    			gp.stopMusic();
-    			gp.playSE(4);
-    			break;
-    		}*/
-    	}
+        if (i != 999) {
+            String objectName = gp.obj[i].name;
+            
+            switch (objectName) {
+                case "Key":
+                    gp.playSE(1);
+                    hasKey++;  // Increment the key count
+                    gp.obj[i] = null;
+                    gp.ui.showMessage("You got a Key!");
+                    break;
+                case "Door":
+                    if (hasKey > 0) {
+                        gp.playSE(3);
+                        gp.obj[i] = null;
+                        hasKey--;  // Decrement the key count when a door is opened
+                        gp.ui.showMessage("You opened the Door!");
+                    } else {
+                        gp.ui.showMessage("You need a Key!");
+                    }
+                    break;
+                case "Boots":
+                    gp.playSE(2);
+                    speed += 2;
+                    gp.obj[i] = null;
+                    gp.ui.showMessage("Speed Up!");
+                    break;
+                case "Chest":
+                    gp.ui.gameFinished = true;
+                    gp.stopMusic();
+                    gp.playSE(4);
+                    break;
+            }
+        }
     }
+    
+    
+    
+    public int getKeyCount() {
+        return hasKey;  // Ensure we're returning the correct field value
+    }
+    
+    public void setKeyCount(int count) {
+        this.hasKey = count;
+    }
+
     
     public void interactNPC(int i) {
     	
