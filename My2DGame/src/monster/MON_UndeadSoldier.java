@@ -5,24 +5,24 @@ import java.util.Random;
 import entity.Entity;
 import main.GamePanel;
 
-public class MON_Wolves extends Entity{
+public class MON_UndeadSoldier extends Entity {
 	GamePanel gp;
 
-	public MON_Wolves(GamePanel gp) {
+	public MON_UndeadSoldier(GamePanel gp) {
 		super(gp);
 		
 		this.gp = gp;
 		
 		type = 2;
-		name = "Wolves";
+		name = "Undead Soldier";
 		speed = 1;
 		maxLife = 10;
 		life = maxLife;
-		
-		solidArea.x = 3;
-		solidArea.y = 18;
-		solidArea.width = 42;
-		solidArea.height = 30;
+
+		solidArea.x = 4;
+		solidArea.y = 4;
+		solidArea.width = 40;
+		solidArea.height = 44;
 		solidAreaDefaultX = solidArea.x;
 		solidAreaDefaultY = solidArea.y;
 		
@@ -30,15 +30,16 @@ public class MON_Wolves extends Entity{
 	}
 
 	public void getImage() {
-		up1 = setup("/monster/wolf_right2", gp.tileSize, gp.tileSize);
-		up2 = setup("/monster/wolf_right3", gp.tileSize, gp.tileSize);
-		down1 = setup("/monster/wolf_left1", gp.tileSize, gp.tileSize);
-		down2 = setup("/monster/wolf_left2", gp.tileSize, gp.tileSize);
-		left1 = setup("/monster/wolf_left1", gp.tileSize, gp.tileSize);
-		left2 = setup("/monster/wolf_left2", gp.tileSize, gp.tileSize);
-		right1 = setup("/monster/wolf_right2", gp.tileSize, gp.tileSize);
-		right2 = setup("/monster/wolf_right3", gp.tileSize, gp.tileSize);
+		up1 = setup("/monster/undeadSoldier_idle_left", gp.tileSize, gp.tileSize);
+		up2 = setup("/monster/undeadSoldier_idle_left", gp.tileSize, gp.tileSize);
+		down1 = setup("/monster/undeadSoldier_idle_right", gp.tileSize, gp.tileSize);
+		down2 = setup("/monster/undeadSoldier_idle_right", gp.tileSize, gp.tileSize);
+		left1 = setup("/monster/undeadSoldier_move_left1", gp.tileSize, gp.tileSize);
+		left2 = setup("/monster/undeadSoldier_move_left2", gp.tileSize, gp.tileSize);
+		right1 = setup("/monster/undeadSoldier_move_right1", gp.tileSize, gp.tileSize);
+		right2 = setup("/monster/undeadSoldier_move_right2", gp.tileSize, gp.tileSize);
 	}
+	
 	
 	public void setAction() {
 		actionLockCounter ++;
@@ -68,4 +69,5 @@ public class MON_Wolves extends Entity{
 		actionLockCounter = 0;
 		direction = gp.player.direction;
 	}
+
 }
