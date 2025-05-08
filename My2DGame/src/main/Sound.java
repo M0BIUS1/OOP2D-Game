@@ -31,8 +31,8 @@ public class Sound {
 			AudioInputStream ais = AudioSystem.getAudioInputStream(soundURL[i]);
 			clip = AudioSystem.getClip();
 			clip.open(ais);
-			
 		}catch (Exception e) {
+			
 		}
 	}
 	

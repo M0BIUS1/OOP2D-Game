@@ -11,6 +11,7 @@ import javax.swing.JPanel;
 
 import entity.Entity;
 import entity.Player;
+import environment.EnvironmentManager;
 import tile.TileManager;
 
 public class GamePanel extends JPanel implements Runnable {
@@ -24,6 +25,7 @@ public class GamePanel extends JPanel implements Runnable {
     public final int maxScreenRow = 12;
     public final int screenWidth = tileSize * maxScreenCol; // 768 pixels 
     public final int screenHeight = tileSize * maxScreenRow; // 576 pixels
+    Graphics2D g2;
     
     // World Settings
     public int maxWorldCol;
@@ -42,6 +44,7 @@ public class GamePanel extends JPanel implements Runnable {
     public AssetSetter aSetter = new AssetSetter(this);
     public UI ui = new UI(this);
     public EventHandler eHandler = new EventHandler(this);
+    EnvironmentManager eManager = new EnvironmentManager(this);
     Thread gameThread; 
     
     //ENTITY AND OBJECTS
@@ -77,6 +80,8 @@ public class GamePanel extends JPanel implements Runnable {
     	aSetter.setObject();
     	aSetter.setNPC();
     	aSetter.setMonster();
+    	eManager.setup();
+    	
     	playMusic(0);
     	stopMusic();
     	gameState = titleState;
@@ -108,6 +113,7 @@ public class GamePanel extends JPanel implements Runnable {
         gameThread.start();
     }
     
+    
     @Override
     public void run() {
         double drawInterval = 1000000000 / FPS;
@@ -124,7 +130,7 @@ public class GamePanel extends JPanel implements Runnable {
             lastTime = currentTime;
             
             if (delta >= 1) {
-                update(); 
+                update();  
                 repaint();
                 delta--;
                 drawCount++;
@@ -230,6 +236,8 @@ public class GamePanel extends JPanel implements Runnable {
             //Empty List
             entityList.clear();
             
+            eManager.draw(g2);
+        	
             //UI
             ui.draw(g2);
         }
@@ -250,7 +258,7 @@ public class GamePanel extends JPanel implements Runnable {
             System.out.println("Draw Time:" + passed);
         }
         
-        
+         
         g2.dispose();
     }
     
@@ -260,6 +268,7 @@ public class GamePanel extends JPanel implements Runnable {
     	music.play();
     	music.loop();
     }
+    
     public void stopMusic() {
     	music.stop();
     }

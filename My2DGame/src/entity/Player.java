@@ -60,6 +60,7 @@ public class Player extends Entity {
         //worldX = gp.tileSize * 10;
         //worldY = gp.tileSize * 13;
         speed = 4; 
+        
         direction = "down";
         
         //PLAYER STATUS
@@ -81,7 +82,7 @@ public class Player extends Entity {
     	//inventory.clear();
     	//add other inventory here
     	inventory.add(currentWeapon);
-    	//inventory.add(currentShield);
+    	inventory.add(currentShield);
     	//inventory.add(new OBJ_Key(gp));
     }
     
